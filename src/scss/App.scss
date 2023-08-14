@@ -1,0 +1,94 @@
+:root[data-theme="dark"] {
+  --bg-color: hsl(235, 21%, 11%);
+  --card-bg: hsl(235, 24%, 19%);
+  --text-color: hsl(0, 0%, 73%);
+  --inactive-color: hsl(234, 11%, 52%);
+  --active-color: hsl(234, 39%, 85%);
+  --hover-color: hsl(236, 33%, 92%);
+  --check-color: hsl(233, 14%, 35%);
+  --shadow-color: hsla(0, 0%, 7%, 0.877);
+  --plus-color: white;
+  --bg-img-mobile: url(./../images/bg-mobile-dark.jpg);
+  --bg-img-desktop: url(./../images/bg-desktop-dark.jpg);
+}
+
+:root[data-theme="light"] {
+  --bg-color: hsl(236, 33%, 92%);
+  --card-bg: hsl(0, 0%, 98%);
+  --text-color: hsl(0, 0%, 26%);
+  --inactive-color: hsl(236, 9%, 61%);
+  --active-color: hsl(220, 98%, 61%);
+  --hover-color: hsl(235, 19%, 35%);
+  --check-color: hsl(233, 11%, 84%);
+  --shadow-color: hsla(240, 5%, 85%, 0.603);
+  --plus-color: black;
+  --bg-img-mobile: url(./../images/bg-mobile-light.jpg);
+  --bg-img-desktop: url(./../images/bg-desktop-light.jpg);
+}
+
+
+@mixin flexForCenter{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.container{
+  width: 90%;
+  margin-inline: auto;
+}
+
+
+.header{
+  background-image: var(--bg-img-mobile);
+  height: 35vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  @include flexForCenter();
+  
+
+  .head{
+    font-size: 1.2rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+
+    h1{
+      letter-spacing: 9px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.box{
+  background-color: var(--card-bg);
+  display: flex;
+  align-items: center;
+  height: 3.5rem;
+  gap: 1rem;
+  padding: 0 0.5rem;
+  border-radius: 10px;
+}
+
+#newTodo{
+  color: var(--text-color);
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: var(--card-bg);
+  font-size: 1.2rem;
+}
+
+.circle{
+  width: 2rem;
+  height: 2rem;
+  border:2px solid var(--check-color);
+  display: inline-block;
+  border-radius: 50%;
+  // margin: 0 0.5rem;
+}
