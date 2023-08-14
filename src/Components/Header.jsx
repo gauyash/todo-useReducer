@@ -1,7 +1,6 @@
 import React from "react";
 import { MdDarkMode } from "react-icons/md";
-import {AiOutlinePlus} from 'react-icons/ai'
-const Header = () => {
+const Header = ({addNewTodo}) => {
   return (
     <div className="header">
       <div className="container">
@@ -10,10 +9,10 @@ const Header = () => {
           <MdDarkMode size={40} />
         </div>
 
-        <div className="newTodoBox box">
+        <form onSubmit={addNewTodo} className="newTodoBox box">
           <span className="circle"></span>
           <input type="text" id="newTodo" placeholder="Create a new todo" />
-        </div>
+        </form>
       </div>
     </div>
   );
