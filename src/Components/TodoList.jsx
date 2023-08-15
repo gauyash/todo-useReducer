@@ -1,26 +1,39 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
 
-const TodoList = ({ todo, handleComplete, handleRemove,clearCompleted,left }) => {
+const TodoList = ({ todo, handleComplete, handleRemove,clearCompleted,left,handleEdit }) => {
   // console.log(todo);
 
   const [active, setActive] = useState("all");
-  // const [filtered, setActive] = useState("all");
+  const [filtered, setFiltered] = useState(todo);
 
-  function handleLink(link) {
-
-    if(link==="all"){
-      
+  useEffect(()=>{
+    if(active==="all"){
+      setFiltered(todo)
+    }
+    else if(active==="active"){
+      const newArray=[...todo];
+      const updatedArray=newArray.filter(item => item.isComplete !=true)
+      setFiltered(updatedArray)
     }
 
-      
+    else{
+      const newArray=[...todo];
+      const updatedArray=newArray.filter(item => item.isComplete==true)
+      setFiltered(updatedArray)
+    }
+  },[todo,active])
+
+
+  function handleLink(link) {
     setActive(link);
-
-
   }
 
-  const todoListElements = todo.map((item, index) => {
+
+
+
+  const todoListElements = filtered.map((item, index) => {
     return (
       <li
         key={index}
@@ -31,7 +44,7 @@ const TodoList = ({ todo, handleComplete, handleRemove,clearCompleted,left }) =>
           <p className="todoText">{item.value}</p>
         </div>
         <div className="actionButtons">
-          <AiFillEdit size={25} />
+          <AiFillEdit onClick={()=> handleEdit(index)} size={25} />
           <MdClose onClick={() => handleRemove(index)} size={25} />
         </div>
       </li>
