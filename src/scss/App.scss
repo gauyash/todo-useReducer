@@ -58,6 +58,30 @@
       letter-spacing: 9px;
       text-transform: uppercase;
     }
+
+    .theme{
+      cursor: pointer;
+    }
+
+    .halfMoon{
+      .firstIcon{
+        display: block;
+      }
+
+      .secondIcon{
+        display: none;
+      }
+    }
+
+    .fullMoon{
+      .firstIcon{
+        display: none;
+      }
+      
+      .secondIcon{
+        display: block;
+      }
+    }
   }
 }
 
@@ -112,7 +136,7 @@
     margin-bottom: 1.5rem;
 
     .todo-list {
-      // z-index: 2;
+      cursor: grabbing;
       
       .todoSelected{
 

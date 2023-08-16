@@ -1,41 +1,48 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
 
-const TodoList = ({ todo, handleComplete, handleRemove,clearCompleted,left,handleEdit }) => {
-  // console.log(todo);
-
+const TodoList = ({
+  todo,
+  handleComplete,
+  handleRemove,
+  clearCompleted,
+  left,
+  handleEdit,
+  D_Start,
+  D_End,
+  D_Enter,
+}) => {
   const [active, setActive] = useState("all");
   const [filtered, setFiltered] = useState(todo);
 
-  useEffect(()=>{
-    if(active==="all"){
-      setFiltered(todo)
+  useEffect(() => {
+    if (active === "all") {
+      setFiltered(todo);
+    } else if (active === "active") {
+      const newArray = [...todo];
+      const updatedArray = newArray.filter((item) => item.isComplete != true);
+      setFiltered(updatedArray);
+    } else {
+      const newArray = [...todo];
+      const updatedArray = newArray.filter((item) => item.isComplete == true);
+      setFiltered(updatedArray);
     }
-    else if(active==="active"){
-      const newArray=[...todo];
-      const updatedArray=newArray.filter(item => item.isComplete !=true)
-      setFiltered(updatedArray)
-    }
-
-    else{
-      const newArray=[...todo];
-      const updatedArray=newArray.filter(item => item.isComplete==true)
-      setFiltered(updatedArray)
-    }
-  },[todo,active])
-
+  }, [todo, active]);
 
   function handleLink(link) {
     setActive(link);
   }
 
-
-
+ 
 
   const todoListElements = filtered.map((item, index) => {
     return (
       <li
+        draggable
+        onDragStart={() => D_Start(index)}
+        onDragEnter={() => D_Enter(index)}
+        onDragEnd={() => D_End(index)}
         key={index}
         className={`box ${item.isComplete === true ? "todoSelected" : ""}`}
       >
@@ -44,7 +51,7 @@ const TodoList = ({ todo, handleComplete, handleRemove,clearCompleted,left,handl
           <p className="todoText">{item.value}</p>
         </div>
         <div className="actionButtons">
-          <AiFillEdit onClick={()=> handleEdit(index)} size={25} />
+          <AiFillEdit onClick={() => handleEdit(index)} size={25} />
           <MdClose onClick={() => handleRemove(index)} size={25} />
         </div>
       </li>
@@ -58,9 +65,9 @@ const TodoList = ({ todo, handleComplete, handleRemove,clearCompleted,left,handl
           <ul className="todo-list">{todoListElements}</ul>
           <div className="status box">
             <h5 className="notCompleted">{`${left} items left`}</h5>
-            <button 
-            onClick={clearCompleted}
-            className="clear">Clear Completed</button>
+            <button onClick={clearCompleted} className="clear">
+              Clear Completed
+            </button>
           </div>
         </div>
 
