@@ -1,21 +1,25 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
+import { globalTodos } from "../Context";
 
-const TodoList = ({
-  todo,
-  handleComplete,
-  handleRemove,
-  clearCompleted,
-  left,
-  handleEdit,
-  D_Start,
-  D_End,
-  D_Enter,
-}) => {
+const TodoList = ({}) => {
+  const {
+    todo,
+    handleComplete,
+    handleRemove,
+    clearCompleted,
+    left,
+    handleEdit,
+    D_Start,
+    D_End,
+    D_Enter,
+  } = globalTodos();
+
   const [active, setActive] = useState("all");
   const [filtered, setFiltered] = useState(todo);
 
+  // Filtering the todo based on the tab which is active
   useEffect(() => {
     if (active === "all") {
       setFiltered(todo);
@@ -34,8 +38,7 @@ const TodoList = ({
     setActive(link);
   }
 
- 
-
+  // Rendering the elements
   const todoListElements = filtered.map((item, index) => {
     return (
       <li
