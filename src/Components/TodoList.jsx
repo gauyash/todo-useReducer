@@ -1,74 +1,50 @@
-import React, { useState, useEffect} from "react";
+import React from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
 import { globalTodos } from "../Context";
 
 const TodoList = ({}) => {
   const {
-    todo,
-    handleComplete,
-    handleRemove,
-    clearCompleted,
-    left,
-    handleEdit,
-    D_Start,
-    D_End,
-    D_Enter,
+    state,
+    dispatch
   } = globalTodos();
 
-  const [active, setActive] = useState("all");
-  const [filtered, setFiltered] = useState(todo);
 
-  // Filtering the todo based on the tab which is active
-  useEffect(() => {
-    if (active === "all") {
-      setFiltered(todo);
-    } else if (active === "active") {
-      const newArray = [...todo];
-      const updatedArray = newArray.filter((item) => item.isComplete != true);
-      setFiltered(updatedArray);
-    } else {
-      const newArray = [...todo];
-      const updatedArray = newArray.filter((item) => item.isComplete == true);
-      setFiltered(updatedArray);
-    }
-  }, [todo, active]);
 
-  function handleLink(link) {
-    setActive(link);
-  }
+  console.log(state);
 
   // Rendering the elements
-  const todoListElements = filtered.map((item, index) => {
-    return (
-      <li
-        draggable
-        onDragStart={() => D_Start(index)}
-        onDragEnter={() => D_Enter(index)}
-        onDragEnd={() => D_End(index)}
-        key={index}
-        className={`box ${item.isComplete === true ? "todoSelected" : ""}`}
-      >
-        <div onClick={() => handleComplete(index)} className="sub-box">
-          <span className="circle"></span>
-          <p className="todoText">{item.value}</p>
-        </div>
-        <div className="actionButtons">
-          <AiFillEdit onClick={() => handleEdit(index)} size={25} />
-          <MdClose onClick={() => handleRemove(index)} size={25} />
-        </div>
-      </li>
-    );
-  });
+  // const todoListElements = state.todo.map((item, index) => {
+  //   return (
+  //     <li
+  //       key={index}
+  //       // className={`box ${item.isComplete === true ? "todoSelected" : ""}`}
+  //       className="box"
+  //     >
+  //       <div 
+  //        className="sub-box">
+  //         <span className="circle"></span>
+  //         <p className="todoText">hellp</p>
+  //       </div>
+  //       <div className="actionButtons">
+  //         <AiFillEdit 
+  //          size={25} />
+  //         <MdClose 
+  //          size={25} />
+  //       </div>
+  //     </li>
+  //   );
+  // });
 
   return (
     <div className="container">
       <div className="todo">
         <div className="todoSubBox">
-          <ul className="todo-list">{todoListElements}</ul>
+          {/* <ul className="todo-list">{todoListElements}</ul> */}
           <div className="status box">
-            <h5 className="notCompleted">{`${left} items left`}</h5>
-            <button onClick={clearCompleted} className="clear">
+            <h5 className="notCompleted">{`items left`}</h5>
+            <button
+             className="clear">
               Clear Completed
             </button>
           </div>
@@ -76,20 +52,17 @@ const TodoList = ({}) => {
 
         <div className="tab box">
           <h4
-            onClick={() => handleLink("all")}
-            className={active === "all" ? "active-link" : ""}
+            // className={active === "all" ? "active-link" : ""}
           >
             All
           </h4>
           <h4
-            onClick={() => handleLink("active")}
-            className={active === "active" ? "active-link" : ""}
+            // className={active === "active" ? "active-link" : ""}
           >
             Active
           </h4>
           <h4
-            onClick={() => handleLink("completed")}
-            className={active === "completed" ? "active-link" : ""}
+            // className={active === "completed" ? "active-link" : ""}
           >
             Completed
           </h4>
