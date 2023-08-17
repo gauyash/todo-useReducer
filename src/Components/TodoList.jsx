@@ -4,65 +4,59 @@ import { MdClose } from "react-icons/md";
 import { globalTodos } from "../Context";
 
 const TodoList = ({}) => {
-  const {
-    state,
-    dispatch
-  } = globalTodos();
+  const { state, handleComplete, handleRemove,tab,clearCompleted,handleLinks,filterTodo } = globalTodos();
 
 
-
-  console.log(state);
-
+ 
   // Rendering the elements
-  // const todoListElements = state.todo.map((item, index) => {
-  //   return (
-  //     <li
-  //       key={index}
-  //       // className={`box ${item.isComplete === true ? "todoSelected" : ""}`}
-  //       className="box"
-  //     >
-  //       <div 
-  //        className="sub-box">
-  //         <span className="circle"></span>
-  //         <p className="todoText">hellp</p>
-  //       </div>
-  //       <div className="actionButtons">
-  //         <AiFillEdit 
-  //          size={25} />
-  //         <MdClose 
-  //          size={25} />
-  //       </div>
-  //     </li>
-  //   );
-  // });
-
+  const todoListElements = filterTodo.map(item => {
+    return (
+      <li
+        key={item.id}
+        className={`box ${item.isComplete === true ? "todoSelected" : ""}`}
+      >
+        <div onClick={() => handleComplete(item.id)} className="sub-box">
+          <span className="circle"></span>
+          <p className="todoText">{item.value}</p>
+        </div>
+        <div className="actionButtons">
+          <AiFillEdit size={25} />
+          <MdClose onClick={() => handleRemove(item.id)} size={25} />
+        </div>
+      </li>
+    );
+  });
   return (
     <div className="container">
       <div className="todo">
         <div className="todoSubBox">
-          {/* <ul className="todo-list">{todoListElements}</ul> */}
+          <ul className="todo-list">{todoListElements}</ul>
           <div className="status box">
-            <h5 className="notCompleted">{`items left`}</h5>
+            <h5 className="notCompleted">{`${
+              state.todo.filter((item) => !item.isComplete).length
+            } items left`}</h5>
             <button
-             className="clear">
-              Clear Completed
-            </button>
+            onClick={clearCompleted}
+             className="clear">Clear Completed</button>
           </div>
         </div>
 
         <div className="tab box">
           <h4
-            // className={active === "all" ? "active-link" : ""}
+          className={tab === "all" ? "active-link" : ""}
+          onClick={()=>handleLinks("all")}
           >
             All
           </h4>
           <h4
-            // className={active === "active" ? "active-link" : ""}
+          className={tab === "active" ? "active-link" : ""}
+          onClick={()=>handleLinks("active")}
           >
             Active
           </h4>
           <h4
-            // className={active === "completed" ? "active-link" : ""}
+          className={tab === "completed" ? "active-link" : ""}
+          onClick={()=>handleLinks("completed")}
           >
             Completed
           </h4>
