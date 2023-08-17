@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useRef } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
 import { globalTodos } from "../Context";
 
 const TodoList = ({}) => {
-  const { state, handleComplete, handleRemove,tab,clearCompleted,handleLinks,filterTodo } = globalTodos();
+  const {
+    state,
+    handleComplete,
+    handleRemove,
+    tab,
+    clearCompleted,
+    handleLinks,
+    filterTodo,
+    handleEdit,
+    D_Start,
+    D_End,
+    D_Enter,
+  } = globalTodos();
 
-
- 
   // Rendering the elements
-  const todoListElements = filterTodo.map(item => {
+  const todoListElements = filterTodo.map((item, index) => {
     return (
       <li
-        key={item.id}
+        key={index}
+        draggable
+        onDragStart={(e) => D_Start(e, index)}
+        onDragEnter={(e) => D_Enter(e, index)}
+        onDragEnd={(e) => D_End(e, index)}
         className={`box ${item.isComplete === true ? "todoSelected" : ""}`}
       >
         <div onClick={() => handleComplete(item.id)} className="sub-box">
@@ -20,7 +34,7 @@ const TodoList = ({}) => {
           <p className="todoText">{item.value}</p>
         </div>
         <div className="actionButtons">
-          <AiFillEdit size={25} />
+          <AiFillEdit onClick={() => handleEdit(item.id)} size={25} />
           <MdClose onClick={() => handleRemove(item.id)} size={25} />
         </div>
       </li>
@@ -35,28 +49,28 @@ const TodoList = ({}) => {
             <h5 className="notCompleted">{`${
               state.todo.filter((item) => !item.isComplete).length
             } items left`}</h5>
-            <button
-            onClick={clearCompleted}
-             className="clear">Clear Completed</button>
+            <button onClick={clearCompleted} className="clear">
+              Clear Completed
+            </button>
           </div>
         </div>
 
         <div className="tab box">
           <h4
-          className={tab === "all" ? "active-link" : ""}
-          onClick={()=>handleLinks("all")}
+            className={tab === "all" ? "active-link" : ""}
+            onClick={() => handleLinks("all")}
           >
             All
           </h4>
           <h4
-          className={tab === "active" ? "active-link" : ""}
-          onClick={()=>handleLinks("active")}
+            className={tab === "active" ? "active-link" : ""}
+            onClick={() => handleLinks("active")}
           >
             Active
           </h4>
           <h4
-          className={tab === "completed" ? "active-link" : ""}
-          onClick={()=>handleLinks("completed")}
+            className={tab === "completed" ? "active-link" : ""}
+            onClick={() => handleLinks("completed")}
           >
             Completed
           </h4>
